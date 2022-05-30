@@ -1,0 +1,18 @@
+{
+  "CONTRACT_ADDRESS": "0xcD306b3139adea2DF3475455Ce69ba342B2DFB90",
+  "SCAN_LINK": "https://rinkeby.etherscan.io/address/0xcD306b3139adea2DF3475455Ce69ba342B2DFB90",
+  "NETWORK": {
+    "NAME": "Ethereum",
+    "SYMBOL": "ETH",
+    "ID": 1
+  },
+  "NFT_NAME": "Goblin vs elfs",
+  "SYMBOL": "Goblin vs elfs",
+  "MAX_SUPPLY": 111,
+  "WEI_COST": 0,
+  "DISPLAY_COST": 0,
+  "GAS_LIMIT": 110000,
+  "MARKETPLACE": "Opensea",
+  "MARKETPLACE_LINK": "https://testnets.opensea.io/collection/",
+  "SHOW_BACKGROUND": true
+}
