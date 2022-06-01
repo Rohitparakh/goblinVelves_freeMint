@@ -5,7 +5,7 @@ const Connect = () => {
     <div className="inner">
       <div className="flex justify-center sm:pt-28 pt-4 sm:block">
         {/* <img src="https://res.cloudinary.com/dqzpz4w3l/image/upload/v1638776923/Bufieslogo_sk6oir.png" className="w-32 sm:w-96 " alt=""> */}
-        <p className="connectHeader">MoonBirds Moonie</p>
+        <p className="connectHeader">Goblin vs Elfs</p>
       </div>
       {/* <div className="quantity pt-4">
                 <span><svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M696 480H328c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h368c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8z"></path><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"></path></svg></span>
@@ -29,7 +29,7 @@ const Connect = () => {
       </div>
       <p className="text-white text-center text-xs">*Max 10 Per Wallet </p>
       <p className="text-center text-white p-4 sm:invisible visible ">
-        © 2022 MoonBirds Moonie
+        © 2022 Goblins vs Elfs
       </p>
     </div>
   );

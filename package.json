@@ -1,10 +1,11 @@
 {
   "name": "yumi_nft",
   "version": "1.0.0",
-  "description": "MoonBirds Moonie NFT NFT",
+  "description": "Goblin vs Elfs NFT",
   "private": true,
   "dependencies": {
     "ethers": "^5.6.2",
+    "ethers-utils": "^2.1.11",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-gif-player": "^0.4.2",

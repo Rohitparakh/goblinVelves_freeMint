@@ -4,7 +4,7 @@ import Icons from "./Icons";
 const Header = () => {
   return (
     <div className="header">
-      <div className="logo">MoonBirds Moonie</div>
+      <div className="logo">Goblin vs Elfs</div>
       <div className="icons">
         <Icons type="twitter" />
         <Icons type="discord" />

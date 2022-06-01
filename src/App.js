@@ -132,15 +132,34 @@ function App() {
     "Goblin vs Elfs is a collection of 1500 Moonies which are ready to moon🚀🚀";
 
   const [totalSupply, setTotalSupply] = useState(0);
+  const [freeTotalSupply, setFreeTotalSupply] = useState(1);
+  const [freeRemaining, setFreeRemaining] = useState(0);
 
   const claimNFTs = () => {
-    let cost = CONFIG.WEI_COST;
+    let cost = 0;
+    let freeQuantity = mintAmount;
+    let paidQuantity = 0;
+    if (totalSupply + mintAmount > freeTotalSupply) {
+      const remainingFree = freeTotalSupply - totalSupply;
+      console.log(remainingFree);
+      if (mintAmount >= remainingFree) {
+        freeQuantity = remainingFree;
+        paidQuantity = mintAmount - freeQuantity;
+      }
+
+      cost = CONFIG.WEI_COST;
+    }
+    console.log(freeQuantity);
+    console.log(paidQuantity);
+    // setCostHolder(cost);
+    // console.log(web3.fromWei(cost.toNumber()));
+    // console.log(ethers.utils.formatEther(cost));
     let gasLimit = CONFIG.GAS_LIMIT;
-    let totalCostWei = String(cost * mintAmount);
+    let totalCostWei = String(cost * paidQuantity);
     let totalGasLimit = String(gasLimit * mintAmount);
 
-    console.log("Cost: ", totalCostWei);
-    console.log("Gas limit: ", totalGasLimit);
+    // console.log("Cost: ", totalCostWei);
+    // console.log("Gas limit: ", totalGasLimit);
     setFeedback(`Minting your ${CONFIG.NFT_NAME}...`);
     setClaimingNft(true);
     blockchain.smartContract.methods
@@ -204,9 +223,16 @@ function App() {
     );
     // console.log(contract);
 
+    const freeTotal = await contract.freeMintTotal();
+    // console.log(freeTotal);
+    setFreeTotalSupply(await freeTotal.toString());
+    // console.log(await contract.freeMintTotal());
     const total = await contract.totalSupply();
     // console.log(await total.toString());
     setTotalSupply(await total.toString());
+    if (total < freeTotal) {
+      setFreeRemaining(freeTotal - total);
+    }
   };
 
   const getConfig = async () => {
@@ -217,7 +243,7 @@ function App() {
       },
     });
     const config = await configResponse.json();
-    console.log(config);
+    // console.log(config);
     SET_CONFIG(config);
   };
 
@@ -272,7 +298,7 @@ function App() {
         <div className="icons">
           <Icons
             type="twitter"
-            link="https://twitter.com/moonbirdsmoonie?s=21"
+            link="https://twitter.com/goblinvselfswtf?s=21&t=azVf7WnqiC8UxZQ_U5nBCQ****"
           />
           <Icons
             type="opensea"
@@ -322,7 +348,9 @@ function App() {
             >
               <div className="info ">
                 <p className="text-black text-center text-lg">{description}</p>
-                <br />
+                <p className="text-black text-center freeRemaining">
+                  Free Remaining: {freeRemaining}
+                </p>
                 {/* <p className="text-center text-white visible ">
                   © 2022 Goblin vs Elfs
                 </p> */}
@@ -371,7 +399,9 @@ function App() {
                     style={{ textAlign: "center", color: "var(--accent)" }}
                   >
                     {/* 1 {CONFIG.SYMBOL} costs {CONFIG.DISPLAY_COST}{" "}{CONFIG.NETWORK.SYMBOL}. */}
-                    Price: {CONFIG.DISPLAY_COST} {CONFIG.NETWORK.SYMBOL}.
+                    Price:{" "}
+                    {totalSupply >= freeTotalSupply ? CONFIG.DISPLAY_COST : 0}{" "}
+                    {CONFIG.NETWORK.SYMBOL}.
                   </s.TextTitle>
                   <s.SpacerXSmall />
                   <s.TextDescription
