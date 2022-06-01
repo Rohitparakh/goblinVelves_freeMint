@@ -106,7 +106,7 @@ function App() {
   const blockchain = useSelector((state) => state.blockchain);
   const data = useSelector((state) => state.data);
   const [claimingNft, setClaimingNft] = useState(false);
-  const [feedback, setFeedback] = useState(`Click buy to mint your NFT.`);
+  const [feedback, setFeedback] = useState(`Click below to mint your NFT.`);
   const [mintAmount, setMintAmount] = useState(1);
 
   const [CONFIG, SET_CONFIG] = useState({
@@ -349,7 +349,13 @@ function App() {
               <div className="info ">
                 <p className="text-black text-center text-lg">{description}</p>
                 <p className="text-black text-center freeRemaining">
-                  Free Remaining: {freeRemaining}
+                  {freeRemaining > 0
+                    ? "Free Remaining: " + freeRemaining
+                    : `Price:${" "}
+                     ${
+                       totalSupply >= freeTotalSupply ? CONFIG.DISPLAY_COST : 0
+                     }${" "}
+                     ${CONFIG.NETWORK.SYMBOL}.`}
                 </p>
                 {/* <p className="text-center text-white visible ">
                   © 2022 Goblin vs Elfs
@@ -395,14 +401,13 @@ function App() {
                 </>
               ) : (
                 <>
-                  <s.TextTitle
+                  {/* <s.TextTitle
                     style={{ textAlign: "center", color: "var(--accent)" }}
                   >
-                    {/* 1 {CONFIG.SYMBOL} costs {CONFIG.DISPLAY_COST}{" "}{CONFIG.NETWORK.SYMBOL}. */}
                     Price:{" "}
                     {totalSupply >= freeTotalSupply ? CONFIG.DISPLAY_COST : 0}{" "}
                     {CONFIG.NETWORK.SYMBOL}.
-                  </s.TextTitle>
+                  </s.TextTitle> */}
                   <s.SpacerXSmall />
                   <s.TextDescription
                     style={{ textAlign: "center", color: "var(--accent)" }}
