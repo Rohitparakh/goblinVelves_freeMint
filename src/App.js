@@ -245,8 +245,8 @@ function App() {
 
   const getRemaining = async () => {
     const provider = new ethers.providers.JsonRpcProvider(
-      // "https://mainnet.infura.io/v3/33fcfd92106d4d7abd6f78393cb08093" //Ethereum Mainnet
-      "https://rinkeby.infura.io/v3/5fd7bcc223cb4943817b92c7aba83941" //Ethereum Test Rinkeby
+      "https://mainnet.infura.io/v3/33fcfd92106d4d7abd6f78393cb08093" //Ethereum Mainnet
+      // "https://rinkeby.infura.io/v3/5fd7bcc223cb4943817b92c7aba83941" //Ethereum Test Rinkeby
     );
 
     const contract = new ethers.Contract(
