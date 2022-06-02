@@ -278,7 +278,7 @@ function App() {
       },
     });
     const config = await configResponse.json();
-    // console.log(config);
+    console.log(config);
     SET_CONFIG(config);
   };
 
