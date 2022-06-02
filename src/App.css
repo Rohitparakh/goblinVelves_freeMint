@@ -337,7 +337,7 @@ text-shadow: 0 0 5px #FFF, 0 0 10px #FFF, 0 0 15px #FFF, 0 0 20px #49ff18;
 .slideImage img {
   margin: 0 auto;
   border-radius: 5px;
-  border: 2px solid #fff;
+  border: 2px solid #000;
 }
 
 .logo p {
@@ -345,11 +345,13 @@ text-shadow: 0 0 5px #FFF, 0 0 10px #FFF, 0 0 15px #FFF, 0 0 20px #49ff18;
   /* min-width: 40vw; */
   /* color: #fefefe; */
   color: #000;
-  font-weight: 900;
+  font-family: "Shadows Into Light", cursive;
+
+  font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 5px;
-  line-height: 4rem;
-  font-size: 2.3rem;
+  line-height: 6rem;
+  font-size: 4em;
   /* background: #040a16; */
 }
 
@@ -432,4 +434,10 @@ iframe {
 
 .description {
   line-height: 35px;
+}
+
+@media(max-width:767px){
+  .logo p{
+    line-height:3.5rem;
+  }
 }

@@ -25,6 +25,7 @@ export const StyledButton = styled.button`
   font-weight: bold;
   color: var(--secondary-text);
   cursor: pointer;
+  width:-webkit-fill-available;
   // box-shadow: 0px 6px 0px -2px rgba(250, 250, 250, 0.3);
   // -webkit-box-shadow: 0px 6px 0px -2px rgba(250, 250, 250, 0.3);
   // -moz-box-shadow: 0px 6px 0px -2px rgba(250, 250, 250, 0.3);
@@ -44,8 +45,8 @@ export const StyledRoundButton = styled.button`
   font-weight: bold;
   font-size: 15px;
   color: var(--accent-text);
-  width: 30px;
   height: 30px;
+  width: 30px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -150,18 +151,9 @@ function App() {
       }
       cost = CONFIG.WEI_COST;
     }
-    console.log(freeQuantity);
-    console.log(paidQuantity);
-    // console.log(freeQuantity);
-    // console.log(paidQuantity);
-    // setCostHolder(cost);
-    // console.log(web3.fromWei(cost.toNumber()));
-    // console.log(ethers.utils.formatEther(cost));
     let gasLimit = CONFIG.GAS_LIMIT;
     let totalCostWei = String(cost * mintAmount);
     let totalGasLimit = String(gasLimit * mintAmount);
-    // console.log("Cost: ", totalCostWei);
-    // console.log("Gas limit: ", totalGasLimit);
     setFeedback(`Minting your ${CONFIG.NFT_NAME}...`);
     setClaimingNft(true);
 
@@ -189,6 +181,8 @@ function App() {
           setClaimingNft(false);
           dispatch(fetchData(blockchain.account));
           getRemaining();
+          setMintAmount(1)
+
         });
     }
     if (paidQuantity > 0) {
@@ -215,6 +209,7 @@ function App() {
           setClaimingNft(false);
           dispatch(fetchData(blockchain.account));
           getRemaining();
+          setMintAmount(1)
         });
     }
   };
@@ -253,7 +248,6 @@ function App() {
       // "https://mainnet.infura.io/v3/33fcfd92106d4d7abd6f78393cb08093" //Ethereum Mainnet
       "https://rinkeby.infura.io/v3/5fd7bcc223cb4943817b92c7aba83941" //Ethereum Test Rinkeby
     );
-    // console.log(CONFIG.CONTRACT_ADDRESS);
 
     const contract = new ethers.Contract(
       CONFIG.CONTRACT_ADDRESS,
@@ -262,26 +256,18 @@ function App() {
     );
     let isFreeMint = await contract.isFreeMint();
     setIsFreeMint(isFreeMint);
-    // setIsFreeMint(!isFreeMint);
     console.log(isFreeMint);
     const freeTotal = await contract.FREE_MINT_MAX();
     console.log(freeTotal);
     setFreeTotalSupply(await freeTotal.toString());
-    // console.log(await contract.freeMintTotal());
     const total = await contract.totalSupply();
-    // console.log(await total.toString());
     setTotalSupply(await total.toString());
-    if (total < freeTotal) {
-      setFreeRemaining(freeTotal - total);
-    }
+
+    setFreeRemaining(freeTotal - total);
+
     if (freeRemaining < 0) {
       setFreeRemaining(0);
     }
-    // setFreeRemaining(2);
-    // setTotalSupply(4998);
-    // setTotalSupply(5000);
-    // setFreeRemaining(0);
-    // setIsFreeMint(false);
   };
 
   const getConfig = async () => {
@@ -347,7 +333,7 @@ function App() {
         <div className="icons">
           <Icons
             type="twitter"
-            link="https://twitter.com/goblinvselfswtf?s=21&t=azVf7WnqiC8UxZQ_U5nBCQ****"
+            link="https://twitter.com/goblinvselfswtf?s=21&t=KNV101fwSxS5k90mPMGb0w"
           />
           <Icons
             type="opensea"
@@ -368,7 +354,7 @@ function App() {
           <div className="slideImage">
             <img
               style={{ maxHeight: "516px" }}
-              src={`https://cdn.discordapp.com/attachments/923870894311497738/964876589064134676/IMG_2164.gif`}
+              src={`https://cdn.discordapp.com/attachments/923870894311497738/981955376452890674/output_fcz8TN.gif`}
             />
           </div>
         </div>
@@ -376,7 +362,7 @@ function App() {
         <div className="inner">
           <div className="flex justify-center  sm:block">
             {" "}
-            <p className="connectHeader">Goblin vs Elfs</p>
+            <p className="connectHeader hide-sm">Goblin vs Elfs</p>
           </div>
           <div>
             <s.Container
@@ -386,7 +372,7 @@ function App() {
               ai={"center"}
               style={{
                 // backgroundColor: "#f5efef",
-                padding: "48px 24px",
+                padding: "48px 24px 20px 24px",
                 borderRadius: 24,
                 width: "75%",
                 margin: "30px auto",
@@ -544,7 +530,12 @@ function App() {
                         </StyledRoundButton>
                       </s.Container>
                       <s.SpacerSmall />
+                      <s.SpacerSmall />
+                      <s.SpacerSmall />
+                      <s.SpacerSmall />
+
                       <s.Container ai={"center"} jc={"center"} fd={"row"}>
+
                         <StyledButton
                           disabled={claimingNft ? 1 : 0}
                           onClick={(e) => {
@@ -553,6 +544,7 @@ function App() {
                             getData();
                           }}
                         >
+
                           {claimingNft ? "Minting" : "Mint"}
                         </StyledButton>
                       </s.Container>
