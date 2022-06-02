@@ -337,7 +337,7 @@ function App() {
           />
           <Icons
             type="opensea"
-            link="https://opensea.io/collection/moonbirds-moonie"
+            link="https://opensea.io/collection/goblinvselfs"
           />
         </div>
       </div>
