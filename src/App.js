@@ -362,7 +362,7 @@ function App() {
         <div className="inner">
           <div className="flex justify-center  sm:block">
             {" "}
-            <p className="connectHeader hide-sm">Goblin vs Elfs</p>
+            {/* <p className="connectHeader hide-sm">Goblin vs Elfs</p> */}
           </div>
           <div>
             <s.Container
