@@ -372,7 +372,7 @@ function App() {
               ai={"center"}
               style={{
                 // backgroundColor: "#f5efef",
-                padding: "48px 24px 20px 24px",
+                padding: "30px 24px 20px 24px",
                 borderRadius: 24,
                 width: "75%",
                 margin: "30px auto",
