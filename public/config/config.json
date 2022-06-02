@@ -2,9 +2,9 @@
   "CONTRACT_ADDRESS": "0xeD9d502026D799F3777255FD9f0F260c9AF8aA19",
   "SCAN_LINK": "https://rinkeby.etherscan.io/address/0xeD9d502026D799F3777255FD9f0F260c9AF8aA19",
   "NETWORK": {
-    "NAME": "Rinkeby",
+    "NAME": "Ethereum",
     "SYMBOL": "ETH",
-    "ID": 4
+    "ID": 1
   },
   "NFT_NAME": "Goblin vs elf",
   "SYMBOL": "Goblin vs elf",
