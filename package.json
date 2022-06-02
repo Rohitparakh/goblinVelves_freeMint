@@ -1,5 +1,5 @@
 {
-  "name": "yumi_nft",
+  "name": "goblin_nft",
   "version": "1.0.0",
   "description": "Goblin vs Elfs NFT",
   "private": true,
@@ -21,7 +21,6 @@
     "web3": "^1.5.1",
     "web3-eth-contract": "^1.5.2"
   },
-  "author": "Daniel Eugene Botha (HashLips)",
   "license": "MIT",
   "scripts": {
     "start": "react-scripts start",

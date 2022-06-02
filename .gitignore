@@ -26,3 +26,6 @@ yarn-error.log*
 todo.txt
 # Local Netlify folder
 .netlify
+
+deploy.txt
+app.txt

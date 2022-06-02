@@ -129,62 +129,94 @@ function App() {
   });
 
   const description =
-    "Goblin vs Elfs is a collection of 1500 Moonies which are ready to moon🚀🚀";
+    "Goblin vs Elfs is a collection of 10,000 Goblin's smashing Elfs and are declared winners at the end of the day by making Elfs pregnant.";
 
   const [totalSupply, setTotalSupply] = useState(0);
   const [freeTotalSupply, setFreeTotalSupply] = useState(1);
   const [freeRemaining, setFreeRemaining] = useState(0);
+
+  const [isFreeMint, setIsFreeMint] = useState(false);
 
   const claimNFTs = () => {
     let cost = 0;
     let freeQuantity = mintAmount;
     let paidQuantity = 0;
     if (totalSupply + mintAmount > freeTotalSupply) {
-      const remainingFree = freeTotalSupply - totalSupply;
-      console.log(remainingFree);
+      let remainingFree = freeTotalSupply - totalSupply;
+      remainingFree = remainingFree < 0 ? 0 : remainingFree;
       if (mintAmount >= remainingFree) {
         freeQuantity = remainingFree;
         paidQuantity = mintAmount - freeQuantity;
       }
-
       cost = CONFIG.WEI_COST;
     }
     console.log(freeQuantity);
     console.log(paidQuantity);
+    // console.log(freeQuantity);
+    // console.log(paidQuantity);
     // setCostHolder(cost);
     // console.log(web3.fromWei(cost.toNumber()));
     // console.log(ethers.utils.formatEther(cost));
     let gasLimit = CONFIG.GAS_LIMIT;
-    let totalCostWei = String(cost * paidQuantity);
+    let totalCostWei = String(cost * mintAmount);
     let totalGasLimit = String(gasLimit * mintAmount);
-
     // console.log("Cost: ", totalCostWei);
     // console.log("Gas limit: ", totalGasLimit);
     setFeedback(`Minting your ${CONFIG.NFT_NAME}...`);
     setClaimingNft(true);
-    blockchain.smartContract.methods
-      .mint(mintAmount)
-      .send({
-        to: CONFIG.CONTRACT_ADDRESS,
-        from: blockchain.account,
-        value: totalCostWei,
-        gasLimit: null,
-        maxFee: null,
-        maxPriority: null,
-      })
-      .once("error", (err) => {
-        console.log(err);
-        setFeedback("Sorry, something went wrong please try again later.");
-        setClaimingNft(false);
-      })
-      .then((receipt) => {
-        console.log(receipt);
-        setFeedback(
-          `WOW, the ${CONFIG.NFT_NAME} is yours! go visit Opensea.io to view it.`
-        );
-        setClaimingNft(false);
-        dispatch(fetchData(blockchain.account));
-      });
+
+    if (isFreeMint == true && freeQuantity > 0) {
+      blockchain.smartContract.methods
+        .freeMint(freeQuantity)
+        .send({
+          to: CONFIG.CONTRACT_ADDRESS,
+          from: blockchain.account,
+          value: 0,
+          gasLimit: null,
+          maxFee: null,
+          maxPriority: null,
+        })
+        .once("error", (err) => {
+          console.log(err);
+          setFeedback("Sorry, something went wrong please try again.");
+          setClaimingNft(false);
+        })
+        .then((receipt) => {
+          console.log(receipt);
+          setFeedback(
+            `WOW, the ${CONFIG.NFT_NAME} is yours! go visit Opensea.io to view it.`
+          );
+          setClaimingNft(false);
+          dispatch(fetchData(blockchain.account));
+          getRemaining();
+        });
+    }
+    if (paidQuantity > 0) {
+      blockchain.smartContract.methods
+        .paidMint(paidQuantity)
+        .send({
+          to: CONFIG.CONTRACT_ADDRESS,
+          from: blockchain.account,
+          value: paidQuantity * CONFIG.WEI_COST,
+          gasLimit: null,
+          maxFee: null,
+          maxPriority: null,
+        })
+        .once("error", (err) => {
+          console.log(err);
+          setFeedback("Sorry, something went wrong please try again.");
+          setClaimingNft(false);
+        })
+        .then((receipt) => {
+          console.log(receipt);
+          setFeedback(
+            `WOW, the ${CONFIG.NFT_NAME} is yours! go visit Opensea.io to view it.`
+          );
+          setClaimingNft(false);
+          dispatch(fetchData(blockchain.account));
+          getRemaining();
+        });
+    }
   };
 
   const decrementMintAmount = () => {
@@ -197,8 +229,15 @@ function App() {
 
   const incrementMintAmount = () => {
     let newMintAmount = mintAmount + 1;
-    if (newMintAmount > 10) {
-      newMintAmount = 10;
+
+    if (isFreeMint == true) {
+      if (newMintAmount > 3) {
+        newMintAmount = 3;
+      }
+    } else {
+      if (newMintAmount > 30) {
+        newMintAmount = 30;
+      }
     }
     setMintAmount(newMintAmount);
   };
@@ -221,10 +260,12 @@ function App() {
       abi,
       provider
     );
-    // console.log(contract);
-
-    const freeTotal = await contract.freeMintTotal();
-    // console.log(freeTotal);
+    let isFreeMint = await contract.isFreeMint();
+    setIsFreeMint(isFreeMint);
+    // setIsFreeMint(!isFreeMint);
+    console.log(isFreeMint);
+    const freeTotal = await contract.FREE_MINT_MAX();
+    console.log(freeTotal);
     setFreeTotalSupply(await freeTotal.toString());
     // console.log(await contract.freeMintTotal());
     const total = await contract.totalSupply();
@@ -233,6 +274,14 @@ function App() {
     if (total < freeTotal) {
       setFreeRemaining(freeTotal - total);
     }
+    if (freeRemaining < 0) {
+      setFreeRemaining(0);
+    }
+    // setFreeRemaining(2);
+    // setTotalSupply(4998);
+    // setTotalSupply(5000);
+    // setFreeRemaining(0);
+    // setIsFreeMint(false);
   };
 
   const getConfig = async () => {
@@ -347,9 +396,11 @@ function App() {
               }}
             >
               <div className="info ">
-                <p className="text-black text-center text-lg">{description}</p>
+                <p className="text-black text-center text-lg description">
+                  {description}
+                </p>
                 <p className="text-black text-center freeRemaining">
-                  {freeRemaining > 0
+                  {isFreeMint == true
                     ? "Free Remaining: " + freeRemaining
                     : `Price:${" "}
                      ${

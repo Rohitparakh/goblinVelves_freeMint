@@ -1,13 +1,13 @@
 {
-  "CONTRACT_ADDRESS": "0x520189fb5f3ab7745b7d5DAa60Ac5d1317489870",
-  "SCAN_LINK": "https://rinkeby.etherscan.io/address/0x520189fb5f3ab7745b7d5DAa60Ac5d1317489870",
+  "CONTRACT_ADDRESS": "0x88FD1fDc4eBfA33BEB26Dd779b5743E2d8D1845B",
+  "SCAN_LINK": "https://rinkeby.etherscan.io/address/0x88FD1fDc4eBfA33BEB26Dd779b5743E2d8D1845B",
   "NETWORK": {
     "NAME": "Rinkeby",
     "SYMBOL": "ETH",
     "ID": 4
   },
-  "NFT_NAME": "Goblin vs elfs",
-  "SYMBOL": "Goblin vs elfs",
+  "NFT_NAME": "Goblin vs elf",
+  "SYMBOL": "Goblin vs elf",
   "MAX_SUPPLY": 10000,
   "WEI_COST": 4000000000000000,
   "DISPLAY_COST": 0.004,

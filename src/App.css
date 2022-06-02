@@ -429,3 +429,7 @@ iframe {
   color: #383838;
   font-weight: bold;
 }
+
+.description {
+  line-height: 35px;
+}
