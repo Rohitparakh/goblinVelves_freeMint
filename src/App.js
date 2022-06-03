@@ -130,7 +130,7 @@ function App() {
   });
 
   const description =
-    "Goblin vs Elfs is a collection of 10,000 Goblin's smashing Elfs and are declared winners at the end of the day by making Elfs pregnant.";
+    "Goblin vs Elfs is a collection of 5,000 Goblin's smashing Elfs and are declared winners at the end of the day by making Elfs pregnant.";
 
   const [totalSupply, setTotalSupply] = useState(0);
   const [freeTotalSupply, setFreeTotalSupply] = useState(1);
