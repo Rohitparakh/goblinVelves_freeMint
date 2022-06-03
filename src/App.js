@@ -256,20 +256,19 @@ function App() {
     );
     let isFreeMint = await contract.isFreeMint();
     setIsFreeMint(isFreeMint);
-    console.log(isFreeMint);
-    const freeTotal = await contract.FREE_MINT_MAX();
-    console.log(freeTotal);
-    setFreeTotalSupply(await freeTotal.toString());
-    const total = await contract.totalSupply();
-    setTotalSupply(await total.toString());
+    let freeTotal = await contract.FREE_MINT_MAX();
+    freeTotal=parseInt(freeTotal.toString())+500;
 
+    setFreeTotalSupply(await freeTotal.toString());
+    let total = await contract.totalSupply();
+    setTotalSupply(await total.toString());
     setFreeRemaining(freeTotal - total);
 
     if (freeRemaining < 0) {
       setFreeRemaining(0);
     }
   };
-
+  
   const getConfig = async () => {
     const configResponse = await fetch("/config/config.json", {
       headers: {
@@ -293,6 +292,7 @@ function App() {
   useEffect(() => {
     getData();
   }, [blockchain.account]);
+
 
   var settings = {
     dots: true,
