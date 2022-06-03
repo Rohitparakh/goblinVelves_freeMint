@@ -135,6 +135,7 @@ function App() {
   const [totalSupply, setTotalSupply] = useState(0);
   const [freeTotalSupply, setFreeTotalSupply] = useState(1);
   const [freeRemaining, setFreeRemaining] = useState(0);
+  const [freeRemainingHolder, setFreeRemainingHolder] = useState(0);
 
   const [isFreeMint, setIsFreeMint] = useState(false);
 
@@ -142,13 +143,18 @@ function App() {
     let cost = 0;
     let freeQuantity = mintAmount;
     let paidQuantity = 0;
+    console.log({totalSupply,mintAmount,freeTotalSupply})
     if (totalSupply + mintAmount > freeTotalSupply) {
-      let remainingFree = freeTotalSupply - totalSupply;
-      remainingFree = remainingFree < 0 ? 0 : remainingFree;
-      if (mintAmount >= remainingFree) {
-        freeQuantity = remainingFree;
+      if (mintAmount >= freeRemaining) {
+        freeQuantity = freeRemaining;
         paidQuantity = mintAmount - freeQuantity;
       }
+      // let remainingFree = freeTotalSupply - totalSupply;
+      // remainingFree = remainingFree < 0 ? 0 : remainingFree;
+      // if (mintAmount >= remainingFree) {
+      //   freeQuantity = remainingFree;
+      //   paidQuantity = mintAmount - freeQuantity;
+      // }
       cost = CONFIG.WEI_COST;
     }
     let gasLimit = CONFIG.GAS_LIMIT;
@@ -156,7 +162,8 @@ function App() {
     let totalGasLimit = String(gasLimit * mintAmount);
     setFeedback(`Minting your ${CONFIG.NFT_NAME}...`);
     setClaimingNft(true);
-
+console.log(freeQuantity)
+console.log(paidQuantity)
     if (isFreeMint == true && freeQuantity > 0) {
       blockchain.smartContract.methods
         .freeMint(freeQuantity)
@@ -187,7 +194,7 @@ function App() {
     }
     if (paidQuantity > 0) {
       blockchain.smartContract.methods
-        .paidMint(paidQuantity)
+        .mint(paidQuantity)
         .send({
           to: CONFIG.CONTRACT_ADDRESS,
           from: blockchain.account,
@@ -255,18 +262,25 @@ function App() {
       provider
     );
     let isFreeMint = await contract.isFreeMint();
+    isFreeMint=false;
     setIsFreeMint(isFreeMint);
     let freeTotal = await contract.FREE_MINT_MAX();
-    freeTotal=parseInt(freeTotal.toString())+500;
-
+    // freeTotal=parseInt(freeTotal.toString())+500;
     setFreeTotalSupply(await freeTotal.toString());
     let total = await contract.totalSupply();
     setTotalSupply(await total.toString());
+    // setTotalSupply(parseInt(totalSupply));
+    // setFreeTotalSupply(parseInt(freeTotalSupply));
     setFreeRemaining(freeTotal - total);
 
     if (freeRemaining < 0) {
       setFreeRemaining(0);
     }
+
+    // setIsFreeMint(false);
+    // setTotalSupply(4500);
+    // setFreeTotalSupply(4500);
+    // setFreeRemaining(0);
   };
   
   const getConfig = async () => {
@@ -293,6 +307,28 @@ function App() {
     getData();
   }, [blockchain.account]);
 
+  useEffect(()=>{
+    if (freeRemaining<0){
+      setFreeRemainingHolder(500+freeRemaining)
+      setFreeRemaining(0)
+    }else{
+      setFreeRemainingHolder(5000-totalSupply)
+    }
+
+    // setFreeRemainingHolder(500+freeRemaining)
+    // if(totalSupply>4500){
+    //   setFreeRemainingHolder(freeRemaining)
+    // }else{
+    //   setFreeRemainingHolder(freeRemaining+500)
+    // }
+  },[freeRemaining])
+  useEffect(()=>{
+    setFreeTotalSupply(parseInt(totalSupply))
+  },[freeTotalSupply])
+  useEffect(()=>{
+    setTotalSupply(parseInt(totalSupply))
+  },[totalSupply])
+  
 
   var settings = {
     dots: true,
@@ -386,13 +422,15 @@ function App() {
                   {description}
                 </p>
                 <p className="text-black text-center freeRemaining">
-                  {isFreeMint == true
-                    ? "Free Remaining: " + freeRemaining
+                  {/* {isFreeMint == true
+                    ? "Free Remaining: " + freeRemaining+500
                     : `Price:${" "}
                      ${
-                       totalSupply >= freeTotalSupply ? CONFIG.DISPLAY_COST : 0
+                       totalSupply >= freeTotalSupply ? CONFIG.DISPLAY_COST : CONFIG.DISPLAY_COST
                      }${" "}
-                     ${CONFIG.NETWORK.SYMBOL}.`}
+                     ${CONFIG.NETWORK.SYMBOL}.`
+                     } */}
+                     Free Remaining: {freeRemainingHolder}
                 </p>
                 {/* <p className="text-center text-white visible ">
                   © 2022 Goblin vs Elfs
