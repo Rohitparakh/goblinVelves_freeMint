@@ -262,7 +262,6 @@ console.log(paidQuantity)
       provider
     );
     let isFreeMint = await contract.isFreeMint();
-    isFreeMint=false;
     setIsFreeMint(isFreeMint);
     let freeTotal = await contract.FREE_MINT_MAX();
     // freeTotal=parseInt(freeTotal.toString())+500;
