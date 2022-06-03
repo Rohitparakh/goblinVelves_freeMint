@@ -8,7 +8,7 @@
   },
   "NFT_NAME": "Goblin vs elf",
   "SYMBOL": "Goblin vs elf",
-  "MAX_SUPPLY": 10000,
+  "MAX_SUPPLY": 5000,
   "WEI_COST": 4000000000000000,
   "DISPLAY_COST": 0.004,
   "GAS_LIMIT": 110000,
